@@ -1,3 +1,5 @@
+import 'package:bef/services/database_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bef/models/user_data.dart';
@@ -16,6 +18,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
+  TextEditingController _searchController = TextEditingController();
+  Future<QuerySnapshot> _users;
   PageController _pageController;
 
   @override
@@ -24,10 +28,65 @@ class _HomeScreenState extends State<HomeScreen> {
     _pageController = PageController();
   }
 
+  _clearSearch() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _searchController.clear());
+    setState(() {
+      _users = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final String currentUserId = Provider.of<UserData>(context).currentUserId;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.orange[500],
+        title: TextField(
+          cursorColor: Colors.white,
+          controller: _searchController,
+          decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            focusColor: Colors.white,
+            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            hintText: 'Tìm kiếm...',
+            prefixIcon: Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Text(
+                'BeF',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Billabong',
+                  fontStyle: FontStyle.italic,
+                  fontSize: 35.0,
+                ),
+              ),
+            ),
+            suffixIcon: IconButton(
+              icon: Icon(
+                Icons.clear,
+                color: Colors.white,
+              ),
+              onPressed: _clearSearch,
+            ),
+            filled: true,
+          ),
+          onSubmitted: (input) {
+            if (input.isNotEmpty) {
+              setState(() {
+                _users = DatabaseService.searchUsers(input);
+              });
+            }
+          },
+        ),
+      ),
       body: PageView(
         controller: _pageController,
         children: <Widget>[
@@ -47,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       bottomNavigationBar: CupertinoTabBar(
+        backgroundColor: Colors.orange[500],
         currentIndex: _currentTab,
         onTap: (int index) {
           setState(() {
@@ -58,7 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
             curve: Curves.easeIn,
           );
         },
-        activeColor: Colors.black,
+        activeColor: Colors.white,
+        inactiveColor: Colors.black,
         items: [
           BottomNavigationBarItem(
             icon: Icon(

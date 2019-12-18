@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +21,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return ListTile(
       leading: CircleAvatar(
         radius: 20.0,
-        backgroundImage:
-        user.profileImageUrl.isEmpty
+        backgroundImage: user.profileImageUrl.isEmpty
             ? AssetImage('assets/images/user_placeholder.jpg')
             : CachedNetworkImageProvider(user.profileImageUrl),
       ),
@@ -40,46 +38,12 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  _clearSearch() {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _searchController.clear());
-    setState(() {
-      _users = null;
-    });
-  }
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: TextField(
-          controller: _searchController,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-            border: InputBorder.none,
-            hintText: 'Search',
-            prefixIcon: Icon(
-              Icons.search,
-              size: 30.0,
-            ),
-            suffixIcon: IconButton(
-              icon: Icon(
-                Icons.clear,
-              ),
-              onPressed: _clearSearch,
-            ),
-            filled: true,
-          ),
-          onSubmitted: (input) {
-            if (input.isNotEmpty) {
-              setState(() {
-                _users = DatabaseService.searchUsers(input);
-              });
-            }
-          },
-        ),
-      ),
+      
       body: _users == null
           ? Center(
               child: Text('Search for a user'),

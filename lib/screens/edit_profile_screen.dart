@@ -94,14 +94,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          'Edit Profile',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+     
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: ListView(

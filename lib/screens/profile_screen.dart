@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bef/models/post_model.dart';
@@ -153,8 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               CircleAvatar(
                 radius: 50.0,
                 backgroundColor: Colors.grey,
-                backgroundImage: 
-                user.profileImageUrl.isEmpty
+                backgroundImage: user.profileImageUrl.isEmpty
                     ? AssetImage('assets/images/user_placeholder.jpg')
                     : CachedNetworkImageProvider(user.profileImageUrl),
               ),
@@ -319,17 +317,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          'BeF',
-          style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Billabong',
-            fontSize: 35.0,
-          ),
-        ),
-      ),
+      
       body: FutureBuilder(
         future: usersRef.document(widget.userId).get(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bef/services/auth_service.dart';
 
-
 class SignupScreen extends StatefulWidget {
   static final String id = 'signup_screen';
 
@@ -24,6 +23,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.orange[500],
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -35,7 +35,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 'BeF',
                 style: TextStyle(
                   fontFamily: 'Billabong',
-                  fontSize: 50.0,
+                  fontSize: 120.0,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
               Form(
@@ -49,9 +50,19 @@ class _SignupScreenState extends State<SignupScreen> {
                         vertical: 10.0,
                       ),
                       child: TextFormField(
-                        decoration: InputDecoration(labelText: 'Name'),
+                        decoration: InputDecoration(
+                          labelText: 'Name',
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Billabong',
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
                         validator: (input) => input.trim().isEmpty
-                            ? 'Please enter a valid name'
+                            ? 'Vui lòng nhập tên của bạn'
                             : null,
                         onSaved: (input) => _name = input,
                       ),
@@ -62,10 +73,19 @@ class _SignupScreenState extends State<SignupScreen> {
                         vertical: 10.0,
                       ),
                       child: TextFormField(
-                        decoration: InputDecoration(labelText: 'Email'),
-                        validator: (input) => !input.contains('@')
-                            ? 'Please enter a valid email'
-                            : null,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Billabong',
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        validator: (input) =>
+                            !input.contains('@') ? 'Email không phù hợp' : null,
                         onSaved: (input) => _email = input,
                       ),
                     ),
@@ -75,9 +95,19 @@ class _SignupScreenState extends State<SignupScreen> {
                         vertical: 10.0,
                       ),
                       child: TextFormField(
-                        decoration: InputDecoration(labelText: 'Password'),
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Billabong',
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
                         validator: (input) => input.length < 6
-                            ? 'Must be at least 6 characters'
+                            ? 'Password phải ít nhất 6 kí tự'
                             : null,
                         onSaved: (input) => _password = input,
                         obscureText: true,
@@ -85,32 +115,28 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     SizedBox(height: 20.0),
                     Container(
-                      width: 250.0,
+                      width: 120.0,
                       child: FlatButton(
                         onPressed: _submit,
-                        color: Colors.blue,
                         padding: EdgeInsets.all(10.0),
                         child: Text(
-                          'Sign Up',
+                          'Đăng ký',
                           style: TextStyle(
-                            color: Colors.white,
                             fontSize: 18.0,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+
                     Container(
                       width: 250.0,
                       child: FlatButton(
                         onPressed: () => Navigator.pop(context),
-                        color: Colors.blue,
                         padding: EdgeInsets.all(10.0),
                         child: Text(
-                          'Back to Login',
+                          'Đã có tài khoản? Đăng nhập ngay',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.0,
+                            fontSize: 10.0,
                           ),
                         ),
                       ),

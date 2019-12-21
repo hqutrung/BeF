@@ -28,65 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
     _pageController = PageController();
   }
 
-  _clearSearch() {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _searchController.clear());
-    setState(() {
-      _users = null;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final String currentUserId = Provider.of<UserData>(context).currentUserId;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.orange[500],
-        title: TextField(
-          cursorColor: Colors.white,
-          controller: _searchController,
-          decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            focusColor: Colors.white,
-            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            hintText: 'Tìm kiếm...',
-            prefixIcon: Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: Text(
-                'BeF',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Billabong',
-                  fontStyle: FontStyle.italic,
-                  fontSize: 35.0,
-                ),
-              ),
-            ),
-            suffixIcon: IconButton(
-              icon: Icon(
-                Icons.clear,
-                color: Colors.white,
-              ),
-              onPressed: _clearSearch,
-            ),
-            filled: true,
-          ),
-          onSubmitted: (input) {
-            if (input.isNotEmpty) {
-              setState(() {
-                _users = DatabaseService.searchUsers(input);
-              });
-            }
-          },
-        ),
-      ),
+
       body: PageView(
         controller: _pageController,
         children: <Widget>[

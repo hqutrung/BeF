@@ -120,23 +120,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              color: Colors.blue,
-              textColor: Colors.white,
+              color: Colors.white,
+              textColor: Colors.black,
               child: Text(
-                'Edit Profile',
-                style: TextStyle(fontSize: 18.0),
+                'Chỉnh sửa thông tin cá nhân',
+                style: TextStyle(fontSize: 12.0),
               ),
             ),
           )
         : Container(
-            width: 200.0,
+            width: 170.0,
             child: FlatButton(
               onPressed: _followOrUnfollow,
               color: _isFollowing ? Colors.grey[200] : Colors.blue,
               textColor: _isFollowing ? Colors.black : Colors.white,
               child: Text(
-                _isFollowing ? 'Unfollow' : 'Follow',
-                style: TextStyle(fontSize: 18.0),
+                _isFollowing ? 'Đang theo dõi' : 'Theo dõi',
+                style: TextStyle(fontSize: 15.0),
               ),
             ),
           );
@@ -172,8 +172,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             Text(
-                              'posts',
-                              style: TextStyle(color: Colors.black54),
+                              'bài viết',
+                              style: TextStyle(color: Colors.black54, fontSize: 10),
                             ),
                           ],
                         ),
@@ -187,8 +187,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             Text(
-                              'followers',
-                              style: TextStyle(color: Colors.black54),
+                              'người theo dõi',
+                              style: TextStyle(
+                                  color: Colors.black54, fontSize: 10),
                             ),
                           ],
                         ),
@@ -202,8 +203,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             Text(
-                              'following',
-                              style: TextStyle(color: Colors.black54),
+                              'đang theo dõi',
+                              style: TextStyle(color: Colors.black54, fontSize: 10),
                             ),
                           ],
                         ),
@@ -276,7 +277,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return GridTile(
       child: Image(
         image: CachedNetworkImageProvider(post.imageUrl),
-        fit: BoxFit.cover,
+        fit: BoxFit.fitHeight,
       ),
     );
   }
@@ -317,7 +318,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      
+      appBar: AppBar(
+        backgroundColor: Colors.orange[500],
+        title: Text(
+          'Trang cá nhân',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Billabong',
+            fontStyle: FontStyle.italic,
+            fontSize: 35.0,
+          ),
+        ),
+      ),
       body: FutureBuilder(
         future: usersRef.document(widget.userId).get(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {

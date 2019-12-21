@@ -94,6 +94,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+              backgroundColor: Colors.orange[500],
+              title: Text(
+                'Thông tin cá nhân',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Billabong',
+                  fontStyle: FontStyle.italic,
+                  fontSize: 35.0,
+                ),
+              ),
+            ),
      
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -119,9 +131,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     FlatButton(
                       onPressed: _handleImageFromGallery,
                       child: Text(
-                        'Change Profile Image',
+                        'Đổi ảnh đại diện',
                         style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Colors.black45,
                             fontSize: 16.0),
                       ),
                     ),
@@ -133,10 +145,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           Icons.person,
                           size: 30.0,
                         ),
-                        labelText: 'Name',
+                        labelText: 'Tên',
                       ),
                       validator: (input) => input.trim().length < 1
-                          ? 'Please enter a valid name'
+                          ? 'Tên không hợp lệ'
                           : null,
                       onSaved: (input) => _name = input,
                     ),
@@ -148,10 +160,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           Icons.book,
                           size: 30.0,
                         ),
-                        labelText: 'Bio',
+                        labelText: 'Tiểu sử',
                       ),
                       validator: (input) => input.trim().length > 150
-                          ? 'Please enter a bio less than 150 characters'
+                          ? 'Nội dung phải dưới 150 kí tự'
                           : null,
                       onSaved: (input) => _bio = input,
                     ),
@@ -161,10 +173,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       width: 250.0,
                       child: FlatButton(
                         onPressed: _submit,
-                        color: Colors.blue,
-                        textColor: Colors.white,
+                        color: Colors.white,
+                        textColor: Colors.black,
                         child: Text(
-                          'Save Profile',
+                          'Lưu thông tin',
                           style: TextStyle(fontSize: 18.0),
                         ),
                       ),

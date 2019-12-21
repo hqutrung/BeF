@@ -17,6 +17,14 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _searchController = TextEditingController();
   Future<QuerySnapshot> _users;
 
+  _clearSearch() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _searchController.clear());
+    setState(() {
+      _users = null;
+    });
+  }
+
   _buildUserTile(User user) {
     return ListTile(
       leading: CircleAvatar(
@@ -38,12 +46,44 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBar(
+        backgroundColor: Colors.orange[500],
+        title: TextField(
+          cursorColor: Colors.white,
+          controller: _searchController,
+          decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            focusColor: Colors.white,
+            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            hintText: 'Tìm kiếm...',
+            suffixIcon: IconButton(
+              icon: Icon(
+                Icons.clear,
+                color: Colors.white,
+              ),
+              onPressed: _clearSearch,
+            ),
+            filled: true,
+          ),
+          onSubmitted: (input) {
+            if (input.isNotEmpty) {
+              setState(() {
+                _users = DatabaseService.searchUsers(input);
+              });
+            }
+          },
+        ),
+      ),
       body: _users == null
           ? Center(
               child: Text('Search for a user'),

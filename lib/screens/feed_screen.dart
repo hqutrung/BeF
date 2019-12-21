@@ -35,7 +35,18 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBar(
+              backgroundColor: Colors.orange[500],
+              title: Text(
+                'BeF',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Billabong',
+                  fontStyle: FontStyle.italic,
+                  fontSize: 35.0,
+                ),
+              ),
+            ),
       body: RefreshIndicator(
         onRefresh: () => _setupFeed(),
         child: ListView.builder(

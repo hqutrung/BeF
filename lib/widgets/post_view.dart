@@ -55,12 +55,12 @@ class PostView extends StatelessWidget {
           ),
         ),
         Container(
-          height: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             image: DecorationImage(
               //image: AssetImage('assets/images/user_placeholder.jpg'),
               image: CachedNetworkImageProvider(post.imageUrl),
-              fit: BoxFit.cover,
+              fit: BoxFit.fitHeight,
             ),
           ),
         ),

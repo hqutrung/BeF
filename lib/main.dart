@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryIconTheme: Theme.of(context).primaryIconTheme.copyWith(
-                color: Colors.black,
+                color: Colors.orange[500],
               ),
         ),
         home: _getScreenId(),

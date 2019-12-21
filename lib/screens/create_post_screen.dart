@@ -31,19 +31,19 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoActionSheet(
-          title: Text('Add Photo'),
+          title: Text('Thêm ảnh mới'),
           actions: <Widget>[
             CupertinoActionSheetAction(
-              child: Text('Take Photo'),
+              child: Text('Chụp ảnh'),
               onPressed: () => _handleImage(ImageSource.camera),
             ),
             CupertinoActionSheetAction(
-              child: Text('Choose From Gallery'),
+              child: Text('Chọn từ thư viện'),
               onPressed: () => _handleImage(ImageSource.gallery),
             ),
           ],
           cancelButton: CupertinoActionSheetAction(
-            child: Text('Cancel'),
+            child: Text('Hủy'),
             onPressed: () => Navigator.pop(context),
           ),
         );
@@ -56,19 +56,19 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: Text('Add Photo'),
+          title: Text('Thêm ảnh mới'),
           children: <Widget>[
             SimpleDialogOption(
-              child: Text('Take Photo'),
+              child: Text('Chụp ảnh'),
               onPressed: () => _handleImage(ImageSource.camera),
             ),
             SimpleDialogOption(
-              child: Text('Choose From Gallery'),
+              child: Text('Chọn từ thư viện'),
               onPressed: () => _handleImage(ImageSource.gallery),
             ),
             SimpleDialogOption(
               child: Text(
-                'Cancel',
+                'Hủy',
                 style: TextStyle(
                   color: Colors.redAccent,
                 ),
@@ -124,6 +124,18 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+              backgroundColor: Colors.orange[500],
+              title: Text(
+                'Thêm hình',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Billabong',
+                  fontStyle: FontStyle.italic,
+                  fontSize: 35.0,
+                ),
+              ),
+            ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
@@ -154,22 +166,26 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           )
                         : Image(
                             image: FileImage(_image),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.scaleDown,
                           ),
                   ),
                 ),
                 SizedBox(height: 20.0),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 20),
                   child: TextField(
                     controller: _captionController,
                     style: TextStyle(fontSize: 18.0),
                     decoration: InputDecoration(
-                      labelText: 'Caption',
+                      labelText: 'Mô tả về ảnh',
                     ),
                     onChanged: (input) => _caption = input,
                   ),
                 ),
+                RaisedButton(
+                  onPressed: () => _submit(),
+                  child: Text('Đăng ảnh'),
+                )
               ],
             ),
           ),

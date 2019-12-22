@@ -342,24 +342,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: usersRef.document(widget.userId).get(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          User user = User.fromDoc(snapshot.data);
-          return ListView(
-            children: <Widget>[
-              _buildProfileInfo(user),
-              _buildToggleButtons(),
-              Divider(),
-              _buildDisplayPosts(),
-            ],
-          );
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _setupPosts();
         },
+        child: FutureBuilder(
+          future: usersRef.document(widget.userId).get(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            User user = User.fromDoc(snapshot.data);
+            return ListView(
+              children: <Widget>[
+                _buildProfileInfo(user),
+                _buildToggleButtons(),
+                Divider(),
+                _buildDisplayPosts(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

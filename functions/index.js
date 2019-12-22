@@ -100,3 +100,26 @@ exports.onUpdatePost = functions.firestore
             }
         });
     });
+
+    exports.onDeletePost = functions.firestore
+    .document('/posts/{userId}/userPosts/{postId}')
+    .onDelete(async (snapshot, context) => {
+        console.log(snapshot.data());
+        const userId = context.params.userId;
+        const postId = context.params.postId;
+        const userFollowersRef = admin
+            .firestore()
+            .collection('followers')
+            .doc(userId)
+            .collection('userFollowers');
+        const userFollowersSnapshot = await userFollowersRef.get();
+        userFollowersSnapshot.forEach(doc => {
+            admin
+                .firestore()
+                .collection('feeds')
+                .doc(doc.id)
+                .collection('userFeed')
+                .doc(postId)
+                .delete();
+        });
+    });

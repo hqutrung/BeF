@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animator/animator.dart';
+import 'package:bef/services/auth_service.dart';
 import 'package:bef/services/database_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -172,6 +173,37 @@ class _PostViewState extends State<PostView> {
                     iconSize: 30.0,
                     onPressed: () {},
                   ),
+                  (widget.post.authorId == widget.currentUserId)
+                      ? IconButton(
+                          icon: Icon(Icons.more_horiz),
+                          iconSize: 30.0,
+                          onPressed: () {
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content: Row(
+                                      children: <Widget>[
+                                        Text('Xóa bài viết'),
+                                      ],
+                                    ),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                          child: const Text('Hủy'),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          }),
+                                      FlatButton(
+                                          child: const Text('Xác nhận'),
+                                          onPressed: () {
+                                            DatabaseService.deletePost(widget.post);
+                                            Navigator.pop(context);
+                                          })
+                                    ],
+                                  );
+                                });
+                          })
+                      : Container(),
                 ],
               ),
               Padding(

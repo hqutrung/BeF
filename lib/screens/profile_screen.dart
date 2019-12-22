@@ -23,7 +23,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  
   bool _isFollowing = false;
   int _followerCount = 0;
   int _followingCount = 0;
@@ -283,12 +282,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ],
     );
   }
-
-  _buildTilePost(Post post) {
+   _buildTilePost(Post post) {
     return GridTile(
       child: Image(
         image: CachedNetworkImageProvider(post.imageUrl),
-        fit: BoxFit.fitHeight,
+        fit: BoxFit.cover,
       ),
     );
   }
@@ -340,6 +338,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             fontSize: 35.0,
           ),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: AuthService.logout,
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: usersRef.document(widget.userId).get(),

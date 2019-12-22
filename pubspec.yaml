@@ -35,6 +35,7 @@ dependencies:
   provider: 3.2.0
   cached_network_image: 2.0.0-rc
   image_cropper: 1.1.1
+  animator: ^1.0.0+3
 
 dev_dependencies:
   flutter_test:

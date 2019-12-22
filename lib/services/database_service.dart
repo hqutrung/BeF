@@ -3,8 +3,6 @@ import 'package:bef/models/post_model.dart';
 import 'package:bef/models/user_model.dart';
 import 'package:bef/utilities/constants.dart';
 
-
-
 class DatabaseService {
   static void updateUser(User user) {
     usersRef.document(user.id).updateData({
@@ -21,10 +19,10 @@ class DatabaseService {
   }
 
   static void createPost(Post post) {
-    postsRef.document(post.authorId).collection('usersPosts').add({
+    postsRef.document(post.authorId).collection('userPosts').add({
       'imageUrl': post.imageUrl,
       'caption': post.caption,
-      'likes': post.likes,
+      'likeCount': post.likeCount,
       'authorId': post.authorId,
       'timestamp': post.timestamp,
     });
@@ -110,7 +108,7 @@ class DatabaseService {
   static Future<List<Post>> getUserPosts(String userId) async {
     QuerySnapshot userPostsSnapshot = await postsRef
         .document(userId)
-        .collection('usersPosts')
+        .collection('userPosts')
         .orderBy('timestamp', descending: true)
         .getDocuments();
     List<Post> posts =
@@ -124,5 +122,51 @@ class DatabaseService {
       return User.fromDoc(userDocSnapshot);
     }
     return User();
+  }
+
+  static void likePost({String currentUserId, Post post}) {
+    DocumentReference postRef = postsRef
+        .document(post.authorId)
+        .collection('userPosts')
+        .document(post.id);
+    postRef.get().then((doc) {
+      int likeCount = doc.data['likeCount'];
+      postRef.updateData({'likeCount': likeCount + 1});
+      likesRef
+          .document(post.id)
+          .collection('postLikes')
+          .document(currentUserId)
+          .setData({});
+    });
+  }
+
+  static void unlikePost({String currentUserId, Post post}) {
+    DocumentReference postRef = postsRef
+        .document(post.authorId)
+        .collection('userPosts')
+        .document(post.id);
+    postRef.get().then((doc) {
+      int likeCount = doc.data['likeCount'];
+      postRef.updateData({'likeCount': likeCount - 1});
+      likesRef
+          .document(post.id)
+          .collection('postLikes')
+          .document(currentUserId)
+          .get()
+          .then((doc) {
+        if (doc.exists) {
+          doc.reference.delete();
+        }
+      });
+    });
+  }
+
+  static Future<bool> didLikePost({String currentUserId, Post post}) async {
+    DocumentSnapshot userDoc = await likesRef
+        .document(post.id)
+        .collection('postLikes')
+        .document(currentUserId)
+        .get();
+    return userDoc.exists;
   }
 }

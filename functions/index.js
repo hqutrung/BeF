@@ -1,14 +1,18 @@
+// The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 const functions = require('firebase-functions');
+
+// The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require('firebase-admin');
 admin.initializeApp();
+
+
 
 exports.onFollowUser = functions.firestore
   .document('/followers/{userId}/userFollowers/{followerId}')
   .onCreate(async (snapshot, context) => {
-
+    console.log(snapshot.data());
     const userId = context.params.userId;
     const followerId = context.params.followerId;
-
     const followedUserPostsRef = admin
       .firestore()
       .collection('posts')
@@ -19,14 +23,11 @@ exports.onFollowUser = functions.firestore
       .collection('feeds')
       .doc(followerId)
       .collection('userFeed');
-
     const followedUserPostsSnapshot = await followedUserPostsRef.get();
-    console.log('followedUserPostsSnapshot', followedUserPostsSnapshot);
     followedUserPostsSnapshot.forEach(doc => {
-
-      userFeedRef.doc(doc.id).set(doc.data());
-      console.log('data', doc.data());
-
+      if (doc.exists) {
+        userFeedRef.doc(doc.id).set(doc.data());
+      }
     });
   });
 
@@ -35,7 +36,6 @@ exports.onUnfollowUser = functions.firestore
   .onDelete(async (snapshot, context) => {
     const userId = context.params.userId;
     const followerId = context.params.followerId;
-    console.log('unfollowTrung', followerId);
     const userFeedRef = admin
       .firestore()
       .collection('feeds')
@@ -79,7 +79,7 @@ exports.onUpdatePost = functions.firestore
     const userId = context.params.userId;
     const postId = context.params.postId;
     const newPostData = snapshot.after.data();
-    console.log('Trung tesst UserID:', userId);
+    console.log(newPostData);
     const userFollowersRef = admin
       .firestore()
       .collection('followers')
@@ -92,7 +92,6 @@ exports.onUpdatePost = functions.firestore
         .collection('feeds')
         .doc(userDoc.id)
         .collection('userFeed');
-
       const postDoc = await postRef.doc(postId).get();
       if (postDoc.exists) {
         postDoc.ref.update(newPostData);

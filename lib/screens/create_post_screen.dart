@@ -98,11 +98,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       });
 
       // Create post
-      String imageUrl = await StorageService.uploadPost(_image);
+String imageUrl = await StorageService.uploadPost(_image);
       Post post = Post(
         imageUrl: imageUrl,
         caption: _caption,
-        likes: {},
+        likeCount: 0,
         authorId: Provider.of<UserData>(context).currentUserId,
         timestamp: Timestamp.fromDate(DateTime.now()),
       );
@@ -147,7 +147,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     ? Padding(
                         padding: EdgeInsets.only(bottom: 10.0),
                         child: LinearProgressIndicator(
-                          backgroundColor: Colors.blue[200],
+                          backgroundColor: Colors.red[200],
                           valueColor: AlwaysStoppedAnimation(Colors.blue),
                         ),
                       )

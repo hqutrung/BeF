@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:animator/animator.dart';
-import 'package:bef/services/auth_service.dart';
 import 'package:bef/services/database_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

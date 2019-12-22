@@ -1,5 +1,4 @@
-import 'package:bef/services/database_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bef/models/user_data.dart';
@@ -18,8 +17,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
-  TextEditingController _searchController = TextEditingController();
-  Future<QuerySnapshot> _users;
+
+
   PageController _pageController;
 
   @override

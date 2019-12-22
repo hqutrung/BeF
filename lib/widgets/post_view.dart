@@ -1,10 +1,8 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bef/models/post_model.dart';
 import 'package:bef/models/user_model.dart';
 import 'package:bef/screens/profile_screen.dart';
-
 
 class PostView extends StatelessWidget {
   final String currentUserId;
@@ -37,8 +35,7 @@ class PostView extends StatelessWidget {
                 CircleAvatar(
                   radius: 25.0,
                   backgroundColor: Colors.grey,
-                  backgroundImage: 
-                  author.profileImageUrl.isEmpty
+                  backgroundImage: author.profileImageUrl.isEmpty
                       ? AssetImage('assets/images/user_placeholder.jpg')
                       : CachedNetworkImageProvider(author.profileImageUrl),
                 ),
@@ -81,6 +78,13 @@ class PostView extends StatelessWidget {
                     iconSize: 30.0,
                     onPressed: () {},
                   ),
+                  (post.authorId == currentUserId)
+                      ? IconButton(
+                          icon: Icon(Icons.more_horiz),
+                          iconSize: 30.0,
+                          onPressed: () {},
+                        )
+                      : Container(),
                 ],
               ),
               Padding(

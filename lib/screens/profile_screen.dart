@@ -1,3 +1,4 @@
+import 'package:bef/services/auth_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bef/models/post_model.dart';
@@ -22,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  
   bool _isFollowing = false;
   int _followerCount = 0;
   int _followingCount = 0;
@@ -173,7 +175,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Text(
                               'bài viết',
-                              style: TextStyle(color: Colors.black54, fontSize: 10),
+                              style: TextStyle(
+                                  color: Colors.black54, fontSize: 10),
                             ),
                           ],
                         ),
@@ -204,7 +207,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Text(
                               'đang theo dõi',
-                              style: TextStyle(color: Colors.black54, fontSize: 10),
+                              style: TextStyle(
+                                  color: Colors.black54, fontSize: 10),
                             ),
                           ],
                         ),
@@ -236,6 +240,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   user.bio,
                   style: TextStyle(fontSize: 15.0),
                 ),
+              ),
+              SizedBox(height: 5.0),
+              FlatButton(
+                child: Text('Đăng xuất'),
+                onPressed: (){
+                  AuthService.logout();
+                },
               ),
               Divider(),
             ],

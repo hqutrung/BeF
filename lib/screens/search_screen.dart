@@ -65,6 +65,7 @@ class _SearchScreenState extends State<SearchScreen> {
               borderSide: BorderSide(color: Colors.white),
               borderRadius: BorderRadius.circular(12),
             ),
+            prefixIcon: Icon(Icons.search),
             hintText: 'Tìm kiếm...',
             suffixIcon: IconButton(
               icon: Icon(
@@ -86,7 +87,7 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: _users == null
           ? Center(
-              child: Text('Search for a user'),
+              child: Text('Tìm kiếm người dùng'),
             )
           : FutureBuilder(
               future: _users,

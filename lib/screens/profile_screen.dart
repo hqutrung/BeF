@@ -240,13 +240,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(fontSize: 15.0),
                 ),
               ),
-              SizedBox(height: 5.0),
-              FlatButton(
-                child: Text('Đăng xuất'),
-                onPressed: (){
-                  AuthService.logout();
-                },
-              ),
               Divider(),
             ],
           ),
@@ -282,7 +275,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ],
     );
   }
-   _buildTilePost(Post post) {
+
+  _buildTilePost(Post post) {
     return GridTile(
       child: Image(
         image: CachedNetworkImageProvider(post.imageUrl),
@@ -340,7 +334,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.exit_to_app),
+            icon: Icon(
+              Icons.power_settings_new,
+              color: Colors.white,
+            ),
             onPressed: AuthService.logout,
           ),
         ],

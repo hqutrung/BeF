@@ -218,6 +218,7 @@ class _PostViewState extends State<PostView> {
               ),
               SizedBox(height: 4.0),
               Row(
+                
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(

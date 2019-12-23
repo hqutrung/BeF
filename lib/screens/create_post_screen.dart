@@ -82,6 +82,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 
+ 
   _handleImage(ImageSource source) async {
     Navigator.pop(context);
     File imageFile = await ImagePicker.pickImage(source: source);
@@ -93,13 +94,14 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     }
   }
 
-  _cropImage(File imageFile) async {
+   _cropImage(File imageFile) async {
     File croppedImage = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
       aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
     );
     return croppedImage;
   }
+
 
   _submit() async {
     if (!_isLoading && _image != null) {
@@ -117,7 +119,25 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         timestamp: Timestamp.fromDate(DateTime.now()),
       );
       DatabaseService.createPost(post);
-
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 120,
+              ),
+              title: Text('Đăng ảnh thành công'),
+              actions: <Widget>[
+                FlatButton(
+                    child: const Text('Xong'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+              ],
+            );
+          });
       // Reset data
       _captionController.clear();
 
@@ -200,7 +220,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         borderSide: BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.circular(12),
                       ),
-
                     ),
                     onChanged: (input) => _caption = input,
                     cursorColor: Colors.black,

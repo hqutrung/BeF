@@ -36,7 +36,7 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange[500],
+        backgroundColor: Colors.orange[400],
         title: Text(
           'BeF',
           style: TextStyle(

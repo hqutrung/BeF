@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[500],
+      backgroundColor: Colors.orange[400],
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -36,7 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 'BeF',
                 style: TextStyle(
                     fontFamily: 'Billabong',
-                    fontSize: 120.0,
+                    fontSize: 160.0,
+                    color:Colors.black,
                     fontStyle: FontStyle.italic,
                     ),
               ),
@@ -54,11 +55,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         decoration: InputDecoration(
                           labelText: 'Email',
                           labelStyle: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontFamily: 'Billabong',
                           ),
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
+                            borderSide: BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
@@ -76,11 +77,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontFamily: 'Billabong',
                           ),
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
+                            borderSide: BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
@@ -101,8 +102,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           'Đăng nhập',
                           style: TextStyle(
-                          
-                            fontSize: 18.0,
+                            
+                          color: Colors.black,
+                            fontSize: 20.0,
                           ),
                         ),
                       ),
@@ -117,8 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           'Chưa có tài khoản? Đăng ký ngay.',
                           style: TextStyle(
-                           
-                            fontSize: 10.0,
+                           color: Colors.black,
+                            fontSize: 11.0,
                           ),
                         ),
                       ),

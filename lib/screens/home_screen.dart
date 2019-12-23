@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: Colors.orange[500],
+        backgroundColor: Colors.orange[400],
         currentIndex: _currentTab,
         onTap: (int index) {
           setState(() {

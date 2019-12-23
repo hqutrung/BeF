@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:bef/models/post_model.dart';
@@ -36,19 +35,21 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-              backgroundColor: Colors.orange[500],
-              title: Text(
-                'BeF',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Billabong',
-                  fontStyle: FontStyle.italic,
-                  fontSize: 35.0,
-                ),
-              ),
-            ),
+        backgroundColor: Colors.orange[500],
+        title: Text(
+          'BeF',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Billabong',
+            fontStyle: FontStyle.italic,
+            fontSize: 35.0,
+          ),
+        ),
+      ),
       body: RefreshIndicator(
-        onRefresh: () => _setupFeed(),
+        onRefresh: () async {
+          _setupFeed();
+        },
         child: ListView.builder(
           itemCount: _posts.length,
           itemBuilder: (BuildContext context, int index) {

@@ -29,7 +29,7 @@ class _FeedScreenState extends State<FeedScreen> {
     List<Post> posts = await DatabaseService.getFeedPosts(widget.currentUserId);
     setState(() {
       _posts = posts;
-    });
+    });//h
   }
 
   @override

@@ -308,7 +308,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         postViews.add(
           PostView(
             currentUserId: widget.currentUserId,
-            post: post,
+            postID: post.id,
             author: _profileUser,
           ),
         );

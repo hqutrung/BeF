@@ -10,39 +10,37 @@ import 'package:bef/screens/profile_screen.dart';
 
 class PostView extends StatefulWidget {
   final String currentUserId;
-  final Post post;
+  final String postID;
   final User author;
 
-  PostView({this.currentUserId, this.post, this.author});
+  PostView({this.currentUserId, this.postID, this.author});
 
   @override
   _PostViewState createState() => _PostViewState();
 }
 
 class _PostViewState extends State<PostView> {
-  int _likeCount = 0;
   bool _isLiked = false;
   bool _heartAnim = false;
+  Stream<Post> postAsyncer;
+  Post _post;
 
   @override
   void initState() {
-    super.initState();
-    _likeCount = widget.post.likeCount;
     _initPostLiked();
+    postAsyncer = DatabaseService.getPostStream(widget.postID, widget.author);
+    super.initState();
   }
 
   @override
   void didUpdateWidget(PostView oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.post.likeCount != widget.post.likeCount) {
-      _likeCount = widget.post.likeCount;
-    }
   }
 
   _initPostLiked() async {
     bool isLiked = await DatabaseService.didLikePost(
       currentUserId: widget.currentUserId,
-      post: widget.post,
+      postID: widget.postID,
     );
     if (mounted) {
       setState(() {
@@ -55,19 +53,21 @@ class _PostViewState extends State<PostView> {
     if (_isLiked) {
       // Unlike Post
       DatabaseService.unlikePost(
-          currentUserId: widget.currentUserId, post: widget.post);
+          currentUserId: widget.currentUserId,
+          postID: widget.postID,
+          authorId: widget.author.id);
       setState(() {
         _isLiked = false;
-        _likeCount = _likeCount - 1;
       });
     } else {
       // Like Post
       DatabaseService.likePost(
-          currentUserId: widget.currentUserId, post: widget.post);
+          currentUserId: widget.currentUserId,
+          postID: widget.postID,
+          authorId: widget.author.id);
       setState(() {
         _heartAnim = true;
         _isLiked = true;
-        _likeCount = _likeCount + 1;
       });
       Timer(Duration(milliseconds: 350), () {
         setState(() {
@@ -79,176 +79,184 @@ class _PostViewState extends State<PostView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => ProfileScreen(
-                currentUserId: widget.currentUserId,
-                userId: widget.post.authorId,
-              ),
-            ),
-          ),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 10.0,
-            ),
-            child: Row(
+    return StreamBuilder<Post>(
+        stream: postAsyncer,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return SizedBox.shrink();
+          } else {
+            _post = snapshot.data;
+            return Column(
               children: <Widget>[
-                CircleAvatar(
-                  radius: 25.0,
-                  backgroundColor: Colors.grey,
-                  backgroundImage: widget.author.profileImageUrl.isEmpty
-                      ? AssetImage('assets/images/user_placeholder.jpg')
-                      : CachedNetworkImageProvider(
-                          widget.author.profileImageUrl),
-                ),
-                SizedBox(width: 8.0),
-                Text(
-                  widget.author.name,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ProfileScreen(
+                        currentUserId: widget.currentUserId,
+                        userId: widget.author.id,
+                      ),
+                    ),
                   ),
-                )
-              ],
-            ),
-          ),
-        ),
-        GestureDetector(
-          onDoubleTap: _likePost,
-          child: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(widget.post.imageUrl),
-                    fit: BoxFit.cover,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 10.0,
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: 25.0,
+                          backgroundColor: Colors.grey,
+                          backgroundImage: widget.author.profileImageUrl.isEmpty
+                              ? AssetImage('assets/images/user_placeholder.jpg')
+                              : CachedNetworkImageProvider(
+                                  widget.author.profileImageUrl),
+                        ),
+                        SizedBox(width: 8.0),
+                        Text(
+                          widget.author.name,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              _heartAnim
-                  ? Animator(
-                      duration: Duration(milliseconds: 300),
-                      tween: Tween(begin: 0.5, end: 1.4),
-                      curve: Curves.elasticOut,
-                      builder: (anim) => Transform.scale(
-                        scale: anim.value,
-                        child: Icon(
-                          Icons.favorite,
-                          size: 100.0,
-                          color: Colors.red[400],
+                GestureDetector(
+                  onDoubleTap: _likePost,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Container(
+                        height: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(_post.imageUrl),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    )
-                  : SizedBox.shrink(),
-            ],
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: _isLiked
-                        ? Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          )
-                        : Icon(Icons.favorite_border),
-                    iconSize: 30.0,
-                    onPressed: _likePost,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.comment),
-                    iconSize: 30.0,
-                    onPressed: () {},
-                  ),
-                  (widget.post.authorId == widget.currentUserId)
-                      ? IconButton(
-                          icon: Icon(Icons.more_horiz),
-                          iconSize: 30.0,
-                          onPressed: () {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    content: Row(
-                                      children: <Widget>[
-                                        Text('Xóa bài viết'),
-                                      ],
-                                    ),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                          child: const Text('Hủy'),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          }),
-                                      FlatButton(
-                                          child: const Text('Xác nhận'),
-                                          onPressed: () {
-                                            DatabaseService.deletePost(
-                                                widget.post);
-                                            Navigator.pop(context);
-                                          })
-                                    ],
-                                  );
-                                });
-                          })
-                      : Container(),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                child: Text(
-                  '${_likeCount.toString()} likes',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
+                      _heartAnim
+                          ? Animator(
+                              duration: Duration(milliseconds: 300),
+                              tween: Tween(begin: 0.5, end: 1.4),
+                              curve: Curves.elasticOut,
+                              builder: (anim) => Transform.scale(
+                                scale: anim.value,
+                                child: Icon(
+                                  Icons.favorite,
+                                  size: 100.0,
+                                  color: Colors.red[400],
+                                ),
+                              ),
+                            )
+                          : SizedBox.shrink(),
+                    ],
                   ),
                 ),
-              ),
-              SizedBox(height: 4.0),
-              Row(
-                
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 12.0,
-                      right: 6.0,
-                    ),
-                    child: Text(
-                      widget.author.name,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          IconButton(
+                            icon: _isLiked
+                                ? Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                  )
+                                : Icon(Icons.favorite_border),
+                            iconSize: 30.0,
+                            onPressed: _likePost,
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.comment),
+                            iconSize: 30.0,
+                            onPressed: () {},
+                          ),
+                          (_post.authorId == widget.currentUserId)
+                              ? IconButton(
+                                  icon: Icon(Icons.more_horiz),
+                                  iconSize: 30.0,
+                                  onPressed: () {
+                                    showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            content: Row(
+                                              children: <Widget>[
+                                                Text('Xóa bài viết'),
+                                              ],
+                                            ),
+                                            actions: <Widget>[
+                                              FlatButton(
+                                                  child: const Text('Hủy'),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  }),
+                                              FlatButton(
+                                                  child: const Text('Xác nhận'),
+                                                  onPressed: () {
+                                                    DatabaseService.deletePost(
+                                                        _post);
+                                                    Navigator.pop(context);
+                                                  })
+                                            ],
+                                          );
+                                        });
+                                  })
+                              : Container(),
+                        ],
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      widget.post.caption,
-                      style: TextStyle(
-                        fontSize: 16.0,
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          '${_post.likeCount} likes',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                      SizedBox(height: 4.0),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: 12.0,
+                              right: 6.0,
+                            ),
+                            child: Text(
+                              widget.author.name,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              _post.caption,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12.0),
+                    ],
                   ),
-                ],
-              ),
-              SizedBox(height: 12.0),
-            ],
-          ),
-        ),
-      ],
-    );
+                ),
+              ],
+            );
+          }
+        });
   }
 }

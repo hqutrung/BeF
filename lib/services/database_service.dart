@@ -132,32 +132,32 @@ class DatabaseService {
     return User();
   }
 
-  static void likePost({String currentUserId, Post post}) {
+  static void likePost({String currentUserId, String postID, String authorId}) {
     DocumentReference postRef = postsRef
-        .document(post.authorId)
+        .document(authorId)
         .collection('userPosts')
-        .document(post.id);
+        .document(postID);
     postRef.get().then((doc) {
       int likeCount = doc.data['likeCount'];
       postRef.updateData({'likeCount': likeCount + 1});
       likesRef
-          .document(post.id)
+          .document(postID)
           .collection('postLikes')
           .document(currentUserId)
           .setData({});
     });
   }
 
-  static void unlikePost({String currentUserId, Post post}) {
+  static void unlikePost({String currentUserId, String postID, String authorId}) {
     DocumentReference postRef = postsRef
-        .document(post.authorId)
+        .document(authorId)
         .collection('userPosts')
-        .document(post.id);
+        .document(postID);
     postRef.get().then((doc) {
       int likeCount = doc.data['likeCount'];
       postRef.updateData({'likeCount': likeCount - 1});
       likesRef
-          .document(post.id)
+          .document(postID)
           .collection('postLikes')
           .document(currentUserId)
           .get()
@@ -169,12 +169,21 @@ class DatabaseService {
     });
   }
 
-  static Future<bool> didLikePost({String currentUserId, Post post}) async {
+  static Future<bool> didLikePost({String currentUserId, String postID}) async {
     DocumentSnapshot userDoc = await likesRef
-        .document(post.id)
+        .document(postID)
         .collection('postLikes')
         .document(currentUserId)
         .get();
     return userDoc.exists;
+  }
+
+  static Stream<Post> getPostStream(String postID, User author) {
+    return postsRef
+        .document(author.id)
+        .collection('userPosts')
+        .document(postID)
+        .snapshots()
+        .map((snapshot) => Post.fromDoc(snapshot));
   }
 }

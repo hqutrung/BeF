@@ -28,8 +28,9 @@ class _FeedScreenState extends State<FeedScreen> {
     List<Post> posts = await DatabaseService.getFeedPosts(widget.currentUserId);
     setState(() {
       _posts = posts;
-    });//h
+    }); //h
   }
+
 //abc
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 User author = snapshot.data;
                 return PostView(
                   currentUserId: widget.currentUserId,
-                  post: post,
+                  postID: post.id,
                   author: author,
                 );
               },

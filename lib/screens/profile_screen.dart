@@ -322,7 +322,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.orange[500],
+        backgroundColor: Colors.orange[400],
         title: Text(
           'Trang cá nhân',
           style: TextStyle(

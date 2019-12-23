@@ -23,7 +23,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[500],
+      backgroundColor: Colors.orange[400],
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -35,7 +35,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 'BeF',
                 style: TextStyle(
                   fontFamily: 'Billabong',
-                  fontSize: 120.0,
+                  fontSize: 160.0,
                   fontStyle: FontStyle.italic,
                 ),
               ),
@@ -53,11 +53,11 @@ class _SignupScreenState extends State<SignupScreen> {
                         decoration: InputDecoration(
                           labelText: 'Name',
                           labelStyle: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontFamily: 'Billabong',
                           ),
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
+                            borderSide: BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
@@ -76,7 +76,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         decoration: InputDecoration(
                           labelText: 'Email',
                           labelStyle: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontFamily: 'Billabong',
                           ),
                           border: OutlineInputBorder(
@@ -98,7 +98,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontFamily: 'Billabong',
                           ),
                           border: OutlineInputBorder(
@@ -122,7 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: Text(
                           'Đăng ký',
                           style: TextStyle(
-                            fontSize: 18.0,
+                            fontSize: 20.0,
                           ),
                         ),
                       ),
@@ -136,7 +136,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: Text(
                           'Đã có tài khoản? Đăng nhập ngay',
                           style: TextStyle(
-                            fontSize: 10.0,
+                            fontSize: 11.0,
                           ),
                         ),
                       ),

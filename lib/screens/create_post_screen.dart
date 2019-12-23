@@ -82,14 +82,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 
-  _cropImage(File imageFile) async {
-    File croppedImage = await ImageCropper.cropImage(
-      sourcePath: imageFile.path,
-      aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
-    );
-    return croppedImage;
-  }
-
+ 
   _handleImage(ImageSource source) async {
     Navigator.pop(context);
     File imageFile = await ImagePicker.pickImage(source: source);
@@ -100,6 +93,15 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       });
     }
   }
+
+   _cropImage(File imageFile) async {
+    File croppedImage = await ImageCropper.cropImage(
+      sourcePath: imageFile.path,
+      aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+    );
+    return croppedImage;
+  }
+
 
   _submit() async {
     if (!_isLoading && _image != null) {

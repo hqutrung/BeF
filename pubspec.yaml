@@ -34,7 +34,7 @@ dependencies:
   uuid: 2.0.4
   provider: 3.2.0
   cached_network_image: 2.0.0-rc
-  image_cropper: 1.1.1
+  image_cropper: 1.1.2
   animator: ^1.0.0+3
   firebase_messaging: 6.0.9
 

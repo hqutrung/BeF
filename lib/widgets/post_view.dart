@@ -195,7 +195,8 @@ class _PostViewState extends State<PostView> {
                                       FlatButton(
                                           child: const Text('Xác nhận'),
                                           onPressed: () {
-                                            DatabaseService.deletePost(widget.post);
+                                            DatabaseService.deletePost(
+                                                widget.post);
                                             Navigator.pop(context);
                                           })
                                     ],

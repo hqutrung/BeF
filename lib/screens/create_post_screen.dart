@@ -7,6 +7,7 @@ import 'package:bef/models/post_model.dart';
 import 'package:bef/models/user_data.dart';
 import 'package:bef/services/database_service.dart';
 import 'package:bef/services/storage_service.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -85,20 +86,29 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     Navigator.pop(context);
     File imageFile = await ImagePicker.pickImage(source: source);
     if (imageFile != null) {
+      imageFile = await _cropImage(imageFile);
       setState(() {
         _image = imageFile;
       });
     }
   }
 
+  _cropImage(File imageFile) async {
+    File croppedImage = await ImageCropper.cropImage(
+      sourcePath: imageFile.path,
+      aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+    );
+    return croppedImage;
+  }
+
   _submit() async {
-    if (!_isLoading && _image != null && _caption.isNotEmpty) {
+    if (!_isLoading && _image != null) {
       setState(() {
         _isLoading = true;
       });
 
       // Create post
-String imageUrl = await StorageService.uploadPost(_image);
+      String imageUrl = await StorageService.uploadPost(_image);
       Post post = Post(
         imageUrl: imageUrl,
         caption: _caption,
@@ -125,17 +135,25 @@ String imageUrl = await StorageService.uploadPost(_image);
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-              backgroundColor: Colors.orange[500],
-              title: Text(
-                'Thêm hình',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Billabong',
-                  fontStyle: FontStyle.italic,
-                  fontSize: 35.0,
-                ),
-              ),
-            ),
+        backgroundColor: Colors.orange[500],
+        title: Text(
+          'Thêm hình',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Billabong',
+            fontStyle: FontStyle.italic,
+            fontSize: 35.0,
+          ),
+        ),
+        actions: (_image != null)
+            ? <Widget>[
+                IconButton(
+                  icon: Icon(Icons.send, color: Colors.white),
+                  onPressed: () => _submit(),
+                )
+              ]
+            : null,
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
@@ -170,22 +188,25 @@ String imageUrl = await StorageService.uploadPost(_image);
                           ),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 10.0),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
                   child: TextField(
                     controller: _captionController,
                     style: TextStyle(fontSize: 18.0),
                     decoration: InputDecoration(
-                      labelText: 'Mô tả về ảnh',
+                      labelText: 'Chia sẻ cảm xúc',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+
                     ),
                     onChanged: (input) => _caption = input,
+                    cursorColor: Colors.black,
+                    maxLines: 6,
                   ),
                 ),
-                RaisedButton(
-                  onPressed: () => _submit(),
-                  child: Text('Đăng ảnh'),
-                )
               ],
             ),
           ),

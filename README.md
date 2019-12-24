@@ -59,7 +59,7 @@
    * Comment
      
    <p align="center">
- <img src="/ScreenShot/new_feed.jpg?raw=true" width="300">  <img src="/ScreenShot/new_feed.jpg?raw=true" width="300">
+ <img src="/ScreenShot/feed.jpg" width="300">  <img src="/ScreenShot/feed.jpg?raw=true" width="300">
    </p>
 
 ## Yêu cầu thiết bị

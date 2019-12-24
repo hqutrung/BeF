@@ -133,23 +133,12 @@
 
 ## Thư viện và công nghệ
 
-- Language : Javascript
+- Language : Dart
 
-- FrameWork : React Native 0.55.4
+- FrameWork : Flutter
 
-- Database: phpMyAdmin
+- Database: Firebase
 
-* react-native - https://github.com/facebook/react-native
-
-* react-navigation - https://github.com/react-navigation/react-navigation
-
-* react-native-maps - https://github.com/react-native-community/react-native-maps
-
-* react-native-swiper - https://github.com/leecade/react-native-swiper
-
-* react-native-linear-gradient - https://github.com/react-native-community/react-native-linear-gradient
-
-* react-native-view-more-text - https://github.com/nlt2390/react-native-view-more-text
 
 ## Tác giả
 

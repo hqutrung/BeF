@@ -177,7 +177,14 @@ class DatabaseService {
         .get();
     return userDoc.exists;
   }
-
+static void commentOnPost(
+      {String currentUserId, String postId, String comment}) {
+    commentsRef.document(postId).collection('postComments').add({
+      'content': comment,
+      'authorId': currentUserId,
+      'timestamp': Timestamp.fromDate(DateTime.now()),
+    });
+  }
   static Stream<Post> getPostStream(String postID, User author) {
     return postsRef
         .document(author.id)

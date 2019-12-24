@@ -99,7 +99,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 }
                 if (snapshot.data.documents.length == 0) {
                   return Center(
-                    child: Text('No users found! Please try again.'),
+                    child: Text('Không tìm thấy người dùng. Vui lòng thử lại'),
                   );
                 }
                 return ListView.builder(

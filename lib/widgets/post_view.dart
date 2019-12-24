@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animator/animator.dart';
+import 'package:bef/screens/comment_screen.dart';
 import 'package:bef/services/database_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -175,10 +176,17 @@ class _PostViewState extends State<PostView> {
                             onPressed: _likePost,
                           ),
                           IconButton(
-                            icon: Icon(Icons.comment),
-                            iconSize: 30.0,
-                            onPressed: () {},
-                          ),
+                              icon: Icon(Icons.comment),
+                              iconSize: 30.0,
+                              onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => CommentsScreen(
+                                        postId: _post.id,
+                                        likeCount: _post.likeCount,
+                                      ),
+                                    ),
+                                  )),
                           (_post.authorId == widget.currentUserId)
                               ? IconButton(
                                   icon: Icon(Icons.more_horiz),
@@ -216,7 +224,7 @@ class _PostViewState extends State<PostView> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 12.0),
                         child: Text(
-                          '${_post.likeCount} likes',
+                          '${_post.likeCount} lượt thích',
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,

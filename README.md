@@ -69,7 +69,7 @@
    * Follow : Nhấn Theo dõi / Bỏ theo dõi  để nhận / không nhận tin từ người này  
      
    <p align="center">
- <img src="/ScreenShot/feed.jpg" width="300">  <img src="/ScreenShot/feed.jpg?raw=true" width="300">
+ <img src="/ScreenShot/search.jpg" width="300">  <img src="/ScreenShot/search.jpg?raw=true" width="300">
    </p>
 
 
@@ -79,7 +79,7 @@
    * Chia sẻ cảm xúc về tấm ảnh
      
    <p align="center">
- <img src="/ScreenShot/feed.jpg" width="300">  <img src="/ScreenShot/feed.jpg?raw=true" width="300">
+ <img src="/ScreenShot/create_post.jpg" width="300">  <img src="/ScreenShot/create_post1.jpg?raw=true" width="300">  <img src="/ScreenShot/create_post2.jpg" width="300"> 
    </p>
 
 
@@ -99,7 +99,7 @@
    * Tất cả ảnh đã đăng (dạng đầy đủ có trạng thái)
 
 <p align="center">
- <img src="/ScreenShot/profile.jpg" width="300">  <img src="/ScreenShot/profile1.jpg?raw=true" width="300">
+ <img src="/ScreenShot/profile.jpg" width="300">  <img src="/ScreenShot/profile1.jpg?raw=true" width="300"> 
    </p>
 
 

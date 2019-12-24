@@ -14,5 +14,6 @@
 ## 3.ScreenShot
 
 ### Màn hình đăng nhập: 
-![Login](/ScreenShot/login.jpg) ![Singup](/ScreenShot/singup.jpg)
+![Login](/ScreenShot/login.jpg) 
+<img src="/ScreenShot/login.jpg?raw=true" height="400">
 

@@ -15,5 +15,5 @@
 
 ### Màn hình đăng nhập: 
 ![Login](/ScreenShot/login.jpg) 
-<img src="/ScreenShot/login.jpg?raw=true" height="400">
+<img src="/ScreenShot/login.jpg?raw=true" height="600">
 

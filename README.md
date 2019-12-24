@@ -54,11 +54,67 @@
    </p>
     
 ### Like / Comment
-   * Like                                       * Comment
+   * Like : Nhấp đúp vào ảnh / Bấm vào icon trái tim để Like
+   
+   * Comment : Nhấp vào icon Cmt và nhập nội dung Comment
      
    <p align="center">
  <img src="/ScreenShot/feed.jpg" width="300">  <img src="/ScreenShot/feed.jpg?raw=true" width="300">
    </p>
+
+
+### Tìm kiếm / Follow
+   * Tìm kiếm : Nhập tên bạn cần tìm, Nhấp vào để đến trang cá nhân của họ
+   
+   * Follow : Nhấn Theo dõi / Bỏ theo dõi  để nhận / không nhận tin từ người này  
+     
+   <p align="center">
+ <img src="/ScreenShot/feed.jpg" width="300">  <img src="/ScreenShot/feed.jpg?raw=true" width="300">
+   </p>
+
+
+### Đăng ảnh
+   * Chọn ảnh đăng: Chụp trực tiếp / Chọn ảnh từ máy 
+   
+   * Chia sẻ cảm xúc về tấm ảnh
+     
+   <p align="center">
+ <img src="/ScreenShot/feed.jpg" width="300">  <img src="/ScreenShot/feed.jpg?raw=true" width="300">
+   </p>
+
+
+### Thông báo
+   * Nhận thông báo mới khi người bạn đang follow đăng tin mới
+        
+   <p align="center">
+ <img src="/ScreenShot/activity.jpg" width="300">
+   </p>
+   
+
+### Xem trang cá nhân
+   * Gồm ảnh đại diện, tiểu sử, số lượng bài viết, số người đang theo dõi, số người theo dõi
+
+   * Tất cả ảnh đã đăng (dạng thu nhỏ)
+   
+   * Tất cả ảnh đã đăng (dạng đầy đủ có trạng thái)
+
+<p align="center">
+ <img src="/ScreenShot/profile.jpg" width="300">  <img src="/ScreenShot/profile1.jpg?raw=true" width="300">
+   </p>
+
+
+
+### Cập nhật profile (ảnh đại diện/tiểu sử)
+   * Đổi ảnh đại diện
+
+   * Đổi tên / tiểu sử
+
+<p align="center">
+ <img src="/ScreenShot/edit_profile.jpg" width="300">  <img src="/ScreenShot/edit_profile.jpg?raw=true" width="300">
+   </p>
+
+
+
 
 ## Yêu cầu thiết bị
 -Android:
@@ -99,7 +155,9 @@
 
 - Nguyễn Mạnh Tùng - 17521236@gm.uit.edu.vn
 
-- Huỳnh Quốc Trung 17520184@gm.uit.edu.vn
+- Huỳnh Quốc Trung - 17520184@gm.uit.edu.vn
+
+- Giáo viên hướng dẫn: Huỳnh Tuấn Anh
 
 
   

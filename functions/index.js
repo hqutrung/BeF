@@ -6,7 +6,6 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 
-
 exports.onFollowUser = functions.firestore
     .document('/followers/{userId}/userFollowers/{followerId}')
     .onCreate(async (snapshot, context) => {
@@ -23,14 +22,23 @@ exports.onFollowUser = functions.firestore
             .collection('feeds')
             .doc(followerId)
             .collection('userFeed');
-
+        const userNotiRef = admin
+            .firestore()
+            .collection('notifications')
+            .doc(userId)
+            .collection('userNotis');
         const followedUserPostsSnapshot = await followedUserPostsRef.get();
         followedUserPostsSnapshot.forEach(doc => {
             if (doc.exists) {
                 userFeedRef.doc(doc.id).set(doc.data());
             }
         });
-
+        userNotiRef.add({
+            'content': 'đã theo dõi bạn',
+            'authorId': followerId,
+            'timestamp': snapshot.updateTime,
+            'type': 1,
+        })
     });
 
 exports.onUnfollowUser = functions.firestore
@@ -101,7 +109,7 @@ exports.onUpdatePost = functions.firestore
         });
     });
 
-    exports.onDeletePost = functions.firestore
+exports.onDeletePost = functions.firestore
     .document('/posts/{userId}/userPosts/{postId}')
     .onDelete(async (snapshot, context) => {
         console.log(snapshot.data());

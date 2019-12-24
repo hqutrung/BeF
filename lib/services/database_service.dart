@@ -1,3 +1,4 @@
+import 'package:bef/models/noti_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bef/models/post_model.dart';
 import 'package:bef/models/user_model.dart';
@@ -192,5 +193,20 @@ static void commentOnPost(
         .document(postID)
         .snapshots()
         .map((snapshot) => Post.fromDoc(snapshot));
+  }
+static Stream<List<Noti>> getUserNotis(String userId) {
+    return notificationsRef
+        .document(userId)
+        .collection('userNotis')
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map(
+          (query) => query.documents
+              .map(
+                (snapshot) =>
+                    Noti.fromDoc(snapshot),
+              )
+              .toList(),
+        );
   }
 }

@@ -1,10 +1,9 @@
-
+import 'noti_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bef/models/user_data.dart';
 import 'package:provider/provider.dart';
 
-import 'activity_screen.dart';
 import 'create_post_screen.dart';
 import 'feed_screen.dart';
 import 'profile_screen.dart';
@@ -18,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
 
-
   PageController _pageController;
 
   @override
@@ -31,14 +29,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final String currentUserId = Provider.of<UserData>(context).currentUserId;
     return Scaffold(
-
       body: PageView(
         controller: _pageController,
         children: <Widget>[
           FeedScreen(currentUserId: currentUserId),
           SearchScreen(),
           CreatePostScreen(),
-          ActivityScreen(),
+          NotiScreen(currentUserId: currentUserId),
           ProfileScreen(
             currentUserId: currentUserId,
             userId: currentUserId,

@@ -53,7 +53,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               ),
               SizedBox(height: 6.0),
               Text(
-                DateFormat.yMd().add_jm().format(comment.timestamp.toDate()),
+                DateFormat('dd-MM-yyyy').add_jm().format(comment.timestamp.toDate()),
               ),
             ],
           ),

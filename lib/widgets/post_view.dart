@@ -233,6 +233,7 @@ class _PostViewState extends State<PostView> {
                       ),
                       SizedBox(height: 4.0),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.only(

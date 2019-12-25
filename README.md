@@ -1,4 +1,4 @@
-# Ứng dụng BeFriend
+﻿# Ứng dụng BeFriend
 
 **BeFriend** là một ứng dụng chia sẻ ảnh miễn phí cho phép người dùng chụp ảnh trên điện thoại của mình sau đó chia sẻ cho bạn bè trên chính mạng xã hội **BeFriend**. 
 
@@ -31,27 +31,33 @@
 
 1. [Tác giả](#tác-giả)
 
+
+
 ## Chức năng
+
 ### Đăng nhập
    * Đăng nhập
    
    <p align="center">
-   <img src="/ScreenShot/login.jpg?raw=true" width="300">
+   <img src="/ScreenShot/login.jpg?raw=true" width="300"> <img src="/ScreenShot/loginfail.jpg?raw=true" width="300">
    </p>
+
     
 ### Đăng ký
    * Đăng ký
    
    <p align="center">
-   <img src="/ScreenShot/singup.jpg?raw=true" width="300">
+   <img src="/ScreenShot/singup.jpg?raw=true" width="300"> <img src="/ScreenShot/singupfail.jpg?raw=true" width="300">
    </p>
+
    
 ### Xem bản tin
    * Xem bản tin
    
    <p align="center">
-   <img src="/ScreenShot/feed.jpg?raw=true" width="300">
+   <img src="/ScreenShot/feed.jpg?raw=true" width="300"> <img src="/ScreenShot/feed1.jpg?raw=true" width="300">
    </p>
+
     
 ### Like / Comment
    * Like : Nhấp đúp vào ảnh / Bấm vào icon trái tim để Like
@@ -59,7 +65,7 @@
    * Comment : Nhấp vào icon Cmt và nhập nội dung Comment
      
    <p align="center">
- <img src="/ScreenShot/feed.jpg" width="300">  <img src="/ScreenShot/feed.jpg?raw=true" width="300">
+ <img src="/ScreenShot/like.jpg" width="300">  <img src="/ScreenShot/comment.jpg?raw=true" width="300">
    </p>
 
 
@@ -69,7 +75,7 @@
    * Follow : Nhấn Theo dõi / Bỏ theo dõi  để nhận / không nhận tin từ người này  
      
    <p align="center">
- <img src="/ScreenShot/search.jpg" width="300">  <img src="/ScreenShot/search.jpg?raw=true" width="300">
+ <img src="/ScreenShot/search.jpg" width="300"> <img src="/ScreenShot/follow.jpg?raw=true" width="300"> <img src="/ScreenShot/unfollow.jpg?raw=true" width="300">
    </p>
 
 
@@ -79,8 +85,7 @@
    * Chia sẻ cảm xúc về tấm ảnh
      
    <p align="center">
- <img src="/ScreenShot/create_post.jpg" width="300">  <img src="/ScreenShot/create_post1.jpg?raw=true" width="300">  <img src="/ScreenShot/create_post2.jpg" width="300"> 
-   </p>
+ <img src="/ScreenShot/create_post.jpg" width="300">  <img src="/ScreenShot/create_post1.jpg?raw=true" width="300">
 
 
 ### Thông báo
@@ -109,8 +114,8 @@
 
    * Đổi tên / tiểu sử
 
-<p align="center">
- <img src="/ScreenShot/edit_profile.jpg" width="300">  <img src="/ScreenShot/edit_profile.jpg?raw=true" width="300">
+<p align="center">	
+ <img src="/ScreenShot/edit_profile.jpg" width="300">
    </p>
 
 

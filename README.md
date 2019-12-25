@@ -89,7 +89,7 @@
 
 
 ### Thông báo
-   * Nhận thông báo mới khi người bạn đang follow đăng tin mới
+   * Nhận thông báo khi có người follow bạn
         
    <p align="center">
  <img src="/ScreenShot/activity.jpg" width="300">

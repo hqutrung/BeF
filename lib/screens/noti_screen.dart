@@ -24,7 +24,7 @@ class _NotiScreenState extends State<NotiScreen> {
   }
 
   void updateNotisAsyncer() {
-    print(widget.currentUserId);
+
     notisAsyncer = DatabaseService.getUserNotis(widget.currentUserId);
   }
 

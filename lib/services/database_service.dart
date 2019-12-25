@@ -15,7 +15,8 @@ class DatabaseService {
 
   static Future<QuerySnapshot> searchUsers(String name) {
     Future<QuerySnapshot> users =
-        usersRef.where('name', isLessThanOrEqualTo: name).getDocuments();
+        usersRef.where('name',isEqualTo: name).getDocuments();
+        
     return users;
   }
 

@@ -75,7 +75,7 @@
    * Follow : Nhấn Theo dõi / Bỏ theo dõi  để nhận / không nhận tin từ người này  
      
    <p align="center">
- <img src="/ScreenShot/search.jpg" width="300"> <img src="/ScreenShot/follow.jpg?raw=true" width="300"> <img src="/ScreenShot/unfollow.jpg?raw=true" width="300">
+ <img src="/ScreenShot/search.jpg" width="270"> <img src="/ScreenShot/follow.jpg?raw=true" width="270"> <img src="/ScreenShot/unfollow.jpg?raw=true" width="270">
    </p>
 
 
@@ -89,7 +89,7 @@
 
 
 ### Thông báo
-   * Nhận thông báo mới khi người bạn đang follow đăng tin mới
+   * Nhận thông báo khi có người follow bạn
         
    <p align="center">
  <img src="/ScreenShot/activity.jpg" width="300">

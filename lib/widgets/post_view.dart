@@ -182,8 +182,8 @@ class _PostViewState extends State<PostView> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (_) => CommentsScreen(
-                                        postId: _post.id,
-                                        likeCount: _post.likeCount,
+                                        post: _post,
+                                        author: widget.author,
                                       ),
                                     ),
                                   )),
@@ -223,12 +223,26 @@ class _PostViewState extends State<PostView> {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Text(
-                          '${_post.likeCount} lượt thích',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              '${_post.likeCount} lượt thích',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Text(
+                              '${_post.cmtCount} bình luận',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(height: 4.0),

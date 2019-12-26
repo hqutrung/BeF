@@ -1,6 +1,8 @@
 import 'package:bef/models/comment_model.dart';
+import 'package:bef/models/post_model.dart';
 import 'package:bef/models/user_data.dart';
 import 'package:bef/models/user_model.dart';
+import 'package:bef/screens/profile_screen.dart';
 import 'package:bef/services/database_service.dart';
 import 'package:bef/utilities/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -9,10 +11,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {
-  final String postId;
-  final int likeCount;
+  final Post post;
+  final User author;
 
-  CommentsScreen({this.postId, this.likeCount});
+  CommentsScreen({this.post, this.author});
 
   @override
   _CommentsScreenState createState() => _CommentsScreenState();
@@ -23,6 +25,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
   bool _isCommenting = false;
 
   _buildComment(Comment comment) {
+    final currentUserId = Provider.of<UserData>(context).currentUserId;
     return FutureBuilder(
       future: DatabaseService.getUserWithId(comment.authorId),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -30,32 +33,45 @@ class _CommentsScreenState extends State<CommentsScreen> {
           return SizedBox.shrink();
         }
         User author = snapshot.data;
-        return ListTile(
-          leading: CircleAvatar(
-            radius: 25.0,
-            backgroundColor: Colors.grey,
-            backgroundImage: author.profileImageUrl.isEmpty
-                ? AssetImage('assets/images/user_placeholder.jpg')
-                : CachedNetworkImageProvider(author.profileImageUrl),
-          ),
-          title: Text(
-            author.name,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
+        return GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ProfileScreen(
+                currentUserId: currentUserId,
+                userId: author.id,
+              ),
             ),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                comment.content,
-                style: TextStyle(color: Colors.black),
+          child: ListTile(
+            leading: CircleAvatar(
+              radius: 25.0,
+              backgroundColor: Colors.grey,
+              backgroundImage: author.profileImageUrl.isEmpty
+                  ? AssetImage('assets/images/user_placeholder.jpg')
+                  : CachedNetworkImageProvider(author.profileImageUrl),
+            ),
+            title: Text(
+              author.name,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 6.0),
-              Text(
-                DateFormat('dd-MM-yyyy').add_jm().format(comment.timestamp.toDate()),
-              ),
-            ],
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  comment.content,
+                  style: TextStyle(color: Colors.black),
+                ),
+                SizedBox(height: 6.0),
+                Text(
+                  DateFormat('dd-MM-yyyy')
+                      .add_jm()
+                      .format(comment.timestamp.toDate()),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -97,8 +113,9 @@ class _CommentsScreenState extends State<CommentsScreen> {
                   if (_isCommenting) {
                     DatabaseService.commentOnPost(
                       currentUserId: currentUserId,
-                      postId: widget.postId,
+                      postId: widget.post.id,
                       comment: _commentController.text,
+                      authorId: widget.author.id,
                     );
                     _commentController.clear();
                     setState(() {
@@ -129,19 +146,33 @@ class _CommentsScreenState extends State<CommentsScreen> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(12.0),
-            child: Text(
-              '${widget.likeCount} lượt thích',
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w600,
-              ),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  '${widget.post.likeCount} lượt thích',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                Text(
+                  '${widget.post.cmtCount} bình luận',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
           ),
           StreamBuilder(
             stream: commentsRef
-                .document(widget.postId)
+                .document(widget.post.id)
                 .collection('postComments')
-                .orderBy('timestamp', descending: true)
+                .orderBy('timestamp', descending: false)
                 .snapshots(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {

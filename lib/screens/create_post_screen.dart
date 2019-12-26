@@ -82,7 +82,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 
- 
   _handleImage(ImageSource source) async {
     Navigator.pop(context);
     File imageFile = await ImagePicker.pickImage(source: source);
@@ -94,14 +93,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     }
   }
 
-   _cropImage(File imageFile) async {
+  _cropImage(File imageFile) async {
     File croppedImage = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
       aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
     );
     return croppedImage;
   }
-
 
   _submit() async {
     if (!_isLoading && _image != null) {
@@ -115,6 +113,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         imageUrl: imageUrl,
         caption: _caption,
         likeCount: 0,
+        cmtCount: 0,
         authorId: Provider.of<UserData>(context).currentUserId,
         timestamp: Timestamp.fromDate(DateTime.now()),
       );

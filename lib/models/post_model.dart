@@ -7,6 +7,7 @@ class Post {
   final int likeCount;
   final String authorId;
   final Timestamp timestamp;
+  final int cmtCount;
 
   Post({
     this.id,
@@ -15,6 +16,7 @@ class Post {
     this.likeCount,
     this.authorId,
     this.timestamp,
+    this.cmtCount,
   });
 
   factory Post.fromDoc(DocumentSnapshot doc) {
@@ -25,6 +27,7 @@ class Post {
       likeCount: doc['likeCount'],
       authorId: doc['authorId'],
       timestamp: doc['timestamp'],
+      cmtCount: doc['cmtCount'],
     );
   }
 }

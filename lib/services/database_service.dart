@@ -15,8 +15,8 @@ class DatabaseService {
 
   static Future<QuerySnapshot> searchUsers(String name) {
     Future<QuerySnapshot> users =
-        usersRef.where('name',isEqualTo: name).getDocuments();
-        
+        usersRef.where('name', isEqualTo: name).getDocuments();
+
     return users;
   }
 
@@ -27,6 +27,7 @@ class DatabaseService {
       'likeCount': post.likeCount,
       'authorId': post.authorId,
       'timestamp': post.timestamp,
+      'cmtCount': post.cmtCount,
     });
   }
 
@@ -135,10 +136,8 @@ class DatabaseService {
   }
 
   static void likePost({String currentUserId, String postID, String authorId}) {
-    DocumentReference postRef = postsRef
-        .document(authorId)
-        .collection('userPosts')
-        .document(postID);
+    DocumentReference postRef =
+        postsRef.document(authorId).collection('userPosts').document(postID);
     postRef.get().then((doc) {
       int likeCount = doc.data['likeCount'];
       postRef.updateData({'likeCount': likeCount + 1});
@@ -150,11 +149,10 @@ class DatabaseService {
     });
   }
 
-  static void unlikePost({String currentUserId, String postID, String authorId}) {
-    DocumentReference postRef = postsRef
-        .document(authorId)
-        .collection('userPosts')
-        .document(postID);
+  static void unlikePost(
+      {String currentUserId, String postID, String authorId}) {
+    DocumentReference postRef =
+        postsRef.document(authorId).collection('userPosts').document(postID);
     postRef.get().then((doc) {
       int likeCount = doc.data['likeCount'];
       postRef.updateData({'likeCount': likeCount - 1});
@@ -179,14 +177,33 @@ class DatabaseService {
         .get();
     return userDoc.exists;
   }
-static void commentOnPost(
-      {String currentUserId, String postId, String comment}) {
+
+  static void commentOnPost(
+      {String currentUserId,
+      String postId,
+      String comment,
+      String authorId,
+      Post post}) {
+    DocumentReference postRef =
+        postsRef.document(authorId).collection('userPosts').document(postId);
+    postRef.get().then((doc) {
+      int cmtCount = doc.data['cmtCount'];
+      postRef.updateData({'cmtCount': cmtCount + 1});
+    });
     commentsRef.document(postId).collection('postComments').add({
       'content': comment,
       'authorId': currentUserId,
       'timestamp': Timestamp.fromDate(DateTime.now()),
     });
+    if (authorId != currentUserId)
+      notificationsRef.document(authorId).collection('userNotis').add({
+        'authorId': currentUserId,
+        'content': 'đã bình luận bài viết của bạn',
+        'timestamp': DateTime.now(),
+        'type': 2,
+      });
   }
+
   static Stream<Post> getPostStream(String postID, User author) {
     return postsRef
         .document(author.id)
@@ -195,7 +212,8 @@ static void commentOnPost(
         .snapshots()
         .map((snapshot) => Post.fromDoc(snapshot));
   }
-static Stream<List<Noti>> getUserNotis(String userId) {
+
+  static Stream<List<Noti>> getUserNotis(String userId) {
     return notificationsRef
         .document(userId)
         .collection('userNotis')
@@ -204,10 +222,17 @@ static Stream<List<Noti>> getUserNotis(String userId) {
         .map(
           (query) => query.documents
               .map(
-                (snapshot) =>
-                    Noti.fromDoc(snapshot),
+                (snapshot) => Noti.fromDoc(snapshot),
               )
               .toList(),
         );
+  }
+
+  static void deleteNoti(String userID, String notiID) {
+    notificationsRef
+        .document(userID)
+        .collection('userNotis')
+        .document(notiID)
+        .delete();
   }
 }

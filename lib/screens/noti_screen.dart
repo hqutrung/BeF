@@ -1,7 +1,6 @@
 import 'package:bef/models/noti_model.dart';
 import 'package:bef/models/user_model.dart';
 import 'package:bef/services/database_service.dart';
-import 'package:bef/utilities/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -24,7 +23,6 @@ class _NotiScreenState extends State<NotiScreen> {
   }
 
   void updateNotisAsyncer() {
-
     notisAsyncer = DatabaseService.getUserNotis(widget.currentUserId);
   }
 
@@ -59,9 +57,36 @@ class _NotiScreenState extends State<NotiScreen> {
               ),
               SizedBox(height: 6.0),
               Text(
-                DateFormat('dd-MM-yyyy').add_jm().format(noti.timestamp.toDate()),
+                DateFormat('dd-MM-yyyy')
+                    .add_jm()
+                    .format(noti.timestamp.toDate()),
               ),
             ],
+          ),
+          trailing: IconButton(
+            icon: Icon(Icons.more_horiz),
+            onPressed: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Text('Gỡ thông báo này'),
+                    title: Text('Gỡ thông báo'),
+                    actions: <Widget>[
+                      FlatButton(
+                          child: const Text('Hủy'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          }),
+                      FlatButton(
+                          child: const Text('Gỡ'),
+                          onPressed: () {
+                            DatabaseService.deleteNoti(
+                                widget.currentUserId, noti.id);
+                            Navigator.pop(context);
+                          })
+                    ],
+                  );
+                }),
           ),
         );
       },
@@ -96,7 +121,8 @@ class _NotiScreenState extends State<NotiScreen> {
                 );
               return ListView.builder(
                 itemCount: notis.length,
-                itemBuilder: (BuildContext context, int index) => _buildNoti(notis[index]),
+                itemBuilder: (BuildContext context, int index) =>
+                    _buildNoti(notis[index]),
               );
             }
           }),

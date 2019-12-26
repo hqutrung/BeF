@@ -120,6 +120,13 @@ exports.onDeletePost = functions.firestore
             .collection('followers')
             .doc(userId)
             .collection('userFollowers');
+        
+        const commentRef=admin
+        .firestore()
+        .collection('comments')
+        .doc(postId)
+        .collection('postComments');
+
         const userFollowersSnapshot = await userFollowersRef.get();
         userFollowersSnapshot.forEach(doc => {
             admin
@@ -128,6 +135,12 @@ exports.onDeletePost = functions.firestore
                 .doc(doc.id)
                 .collection('userFeed')
                 .doc(postId)
-                .delete();
+                .delete();              
+        });
+        const cmtFollowersSnapshot = await commentRef.get();
+        cmtFollowersSnapshot.forEach(doc => {
+            commentRef
+                .doc(doc.id)
+                .delete();             
         });
     });

@@ -147,6 +147,13 @@ class DatabaseService {
           .document(currentUserId)
           .setData({});
     });
+    if (authorId != currentUserId)
+      notificationsRef.document(authorId).collection('userNotis').add({
+        'authorId': currentUserId,
+        'content': 'đã thích bài viết của bạn',
+        'timestamp': DateTime.now(),
+        'type': 3,
+      });
   }
 
   static void unlikePost(

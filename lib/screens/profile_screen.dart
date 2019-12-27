@@ -332,15 +332,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             fontSize: 35.0,
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.power_settings_new,
-              color: Colors.white,
-            ),
-            onPressed: AuthService.logout,
-          ),
-        ],
+        actions: widget.userId == Provider.of<UserData>(context).currentUserId
+            ? <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.power_settings_new,
+                    color: Colors.white,
+                  ),
+                  onPressed: AuthService.logout,
+                ),
+              ]
+            : null,
       ),
       body: RefreshIndicator(
         onRefresh: () async {

@@ -2,7 +2,6 @@ import 'package:bef/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:provider/provider.dart';
 
 import 'models/user_data.dart';
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryIconTheme: Theme.of(context).primaryIconTheme.copyWith(
-                color: Colors.orange[500],
+                color: Colors.orange[400],
               ),
         ),
         home: _getScreenId(),

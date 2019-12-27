@@ -13,11 +13,52 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String _email, _password;
 
-  _submit() {
+  _showErrorDialog(String code) {
+    String error;
+    switch (code) {
+      case "ERROR_INVALID_EMAIL":
+        error = 'Địa chỉ Email không hợp lệ!';
+
+        break;
+      case "ERROR_USER_NOT_FOUND":
+        error = 'Tài khoản không tồn tại!';
+
+        break;
+      case "ERROR_WRONG_PASSWORD":
+        error = 'Sai mật khẩu!';
+
+        break;
+      case "ERROR_USER_DISABLED":
+        error = 'Tài khoản bị khóa';
+
+        break;
+    }
+    return showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(
+              error,
+              style: TextStyle(color: Colors.red),
+            ),
+            title: Text('Lỗi đăng nhập'),
+            actions: <Widget>[
+              FlatButton(
+                  child: const Text('Hủy'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
+          );
+        });
+  }
+
+  _submit() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       // Logging in the user w/ Firebase
-      AuthService.login(_email, _password);
+      String _catch = await AuthService.login(_email, _password);
+      if (_catch != '') _showErrorDialog(_catch);
     }
   }
 
@@ -35,11 +76,11 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 'BeF',
                 style: TextStyle(
-                    fontFamily: 'Billabong',
-                    fontSize: 160.0,
-                    color:Colors.black,
-                    fontStyle: FontStyle.italic,
-                    ),
+                  fontFamily: 'Billabong',
+                  fontSize: 160.0,
+                  color: Colors.black,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
               Form(
                 key: _formKey,
@@ -102,8 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           'Đăng nhập',
                           style: TextStyle(
-                            
-                          color: Colors.black,
+                            color: Colors.black,
                             fontSize: 20.0,
                           ),
                         ),
@@ -119,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           'Chưa có tài khoản? Đăng ký ngay.',
                           style: TextStyle(
-                           color: Colors.black,
+                            color: Colors.black,
                             fontSize: 11.0,
                           ),
                         ),

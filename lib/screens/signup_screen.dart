@@ -11,12 +11,45 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   String _name, _email, _password;
+  _showErrorDialog(String code) {
+    String error;
+    switch (code) {
+      case "ERROR_EMAIL_ALREADY_IN_USE":
+        error = 'Tài khoản đã tồn tại';
 
-  _submit() {
+        break;
+      case "ERROR_INVALID_EMAIL":
+        error = 'Địa chỉ Email không hợp lệ!';
+
+        break;
+    }
+    return showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(
+              error,
+              style: TextStyle(color: Colors.red),
+            ),
+            title: Text('Lỗi đăng nhập'),
+            actions: <Widget>[
+              FlatButton(
+                  child: const Text('Hủy'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
+          );
+        });
+  }
+
+  _submit() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       // Logging in the user w/ Firebase
-      AuthService.signUpUser(context, _name, _email, _password);
+      String code =
+          await AuthService.signUpUser(context, _name, _email, _password);
+      if (code != '') _showErrorDialog(code);
     }
   }
 
@@ -127,7 +160,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                     ),
-
                     Container(
                       width: 250.0,
                       child: FlatButton(

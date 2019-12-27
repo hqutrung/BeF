@@ -16,10 +16,16 @@ class MyApp extends StatelessWidget {
     return StreamBuilder<FirebaseUser>(
       stream: FirebaseAuth.instance.onAuthStateChanged,
       builder: (BuildContext context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          print('loading');
+
+          return LoadingPage();
+        } else if (snapshot.hasData) {
+          print('home');
           Provider.of<UserData>(context).currentUserId = snapshot.data.uid;
           return HomeScreen();
         } else {
+          print('login');
           return LoginScreen();
         }
       },
@@ -45,6 +51,26 @@ class MyApp extends StatelessWidget {
           SignupScreen.id: (context) => SignupScreen(),
           FeedScreen.id: (context) => FeedScreen(),
         },
+      ),
+    );
+  }
+}
+
+class LoadingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.orange[400],
+      body: Center(
+        child: Text(
+          'BeF',
+          style: TextStyle(
+            fontFamily: 'Billabong',
+            fontSize: 180.0,
+            color: Colors.black,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
       ),
     );
   }

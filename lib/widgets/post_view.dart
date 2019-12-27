@@ -246,32 +246,37 @@ class _PostViewState extends State<PostView> {
                         ),
                       ),
                       SizedBox(height: 4.0),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: 12.0,
-                              right: 6.0,
-                            ),
-                            child: Text(
-                              widget.author.name,
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 12.0,
+                                right: 6.0,
+                              ),
+                              child: Text(
+                                widget.author.name,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              _post.caption,
-                              style: TextStyle(
-                                fontSize: 16.0,
+                            Container(
+                              child: Expanded(
+                                child: Text(
+                                  _post.caption,
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                  ),
+                                  overflow: TextOverflow.clip,
+                                ),
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SizedBox(height: 12.0),
                     ],

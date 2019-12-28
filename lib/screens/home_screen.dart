@@ -33,8 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _pageController,
         children: <Widget>[
           FeedScreen(currentUserId: currentUserId),
-          SearchScreen(),
           CreatePostScreen(),
+          SearchScreen(),
+          
           NotiScreen(currentUserId: currentUserId),
           ProfileScreen(
             currentUserId: currentUserId,
@@ -69,18 +70,19 @@ class _HomeScreenState extends State<HomeScreen> {
               size: 32.0,
             ),
           ),
+           BottomNavigationBarItem(
+            icon: Icon(
+              Icons.photo_camera,
+              size: 32.0,
+            ),
+          ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.search,
               size: 32.0,
             ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.photo_camera,
-              size: 32.0,
-            ),
-          ),
+         
           BottomNavigationBarItem(
             icon: Icon(
               Icons.notifications,
